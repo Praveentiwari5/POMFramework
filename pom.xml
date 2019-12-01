@@ -26,6 +26,14 @@
 			<version>3.9.0</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/com.relevantcodes/extentreports -->
+		<dependency>
+			<groupId>com.relevantcodes</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>2.41.0</version>
+		</dependency>
+
+
 		<!-- https://mvnrepository.com/artifact/org.testng/testng -->
 		<dependency>
 			<groupId>org.testng</groupId>
@@ -39,6 +47,7 @@
 			<artifactId>poi</artifactId>
 			<version>3.16-beta2</version>
 		</dependency>
+
 
 
 		<dependency>

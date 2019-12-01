@@ -8,13 +8,17 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 
 import com.crm.qa.util.TestUtil;
+import com.crm.qa.util.WebEventListener;
 
 public class TestBase {
 
 	public static WebDriver driver;
 	public static Properties prop;
+	public  static EventFiringWebDriver e_driver;
+	public static WebEventListener eventListener;
 	
 	// Default constructor which will called from other classes using super keyword. 
 	// This will read the config.properties file.
@@ -42,10 +46,19 @@ public class TestBase {
 			System.setProperty("webdriver.chrome.driver", "E:\\Study\\Drivers\\chromedriver.exe");
 			driver = new ChromeDriver();
 		}
+		
+		e_driver = new EventFiringWebDriver(driver);
+		// Now create object of EventListerHandler to register it with EventFiringWebDriver
+		eventListener = new WebEventListener();
+		e_driver.register(eventListener);
+		driver = e_driver;
+		
 		driver.manage().window().maximize();
 		driver.manage().timeouts().pageLoadTimeout(TestUtil.Page_Load_Timeout, TimeUnit.SECONDS);
 		driver.manage().timeouts().implicitlyWait(TestUtil.Implicit_Wait, TimeUnit.SECONDS);
 	
 		driver.get(prop.getProperty("url"));
 	}
+	
+
 }

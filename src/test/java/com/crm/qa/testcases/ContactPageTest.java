@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.crm.qa.base.TestBase;
@@ -18,7 +19,7 @@ public class ContactPageTest extends TestBase{
 	LoginPage loginpage;
 	HomePage homepage;
 	ContactsPage contactspage;
-	
+	String sheetName = "contacts";
 	
 	public ContactPageTest(){
 		
@@ -41,9 +42,29 @@ public class ContactPageTest extends TestBase{
 		Assert.assertTrue(contactspage.verifyContactText());		
 	}
 	
+	@Test
+	public void newContact(){
+	Assert.assertTrue(contactspage.newContact());
+		
+	}
+	
+	@DataProvider 
+	public Object [][] getdatafromexcel(){
+		Object data [][] = TestUtil.getTestData(sheetName);
+		return data;
+	}
+	
+	@Test (dataProvider = "getdatafromexcel")
+	public void addnewContacts(String fName, String lName){
+		Assert.assertTrue(contactspage.verifyContactText());
+		contactspage.clickNewContact();
+		contactspage.createNewContact(fName, lName);
+		
+	}
+	
 	@AfterMethod
 	public void teardown(){
-	//	driver.quit();
+		driver.quit();
 	}
 
 }
